@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ExpenseBook</string>
+    <string name="add_new_state">Add new State</string>
 </resources>
