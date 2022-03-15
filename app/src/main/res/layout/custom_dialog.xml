@@ -23,7 +23,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:hint="State name"
+        android:hint="Item name"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
