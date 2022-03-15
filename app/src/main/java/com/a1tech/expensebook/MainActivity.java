@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -70,11 +71,14 @@ public class MainActivity extends AppCompatActivity {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_alert_dialog, viewGroup, false);
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
+        final TextView name = (TextView) dialogView.findViewById(R.id.stateName);
+        final TextView desc = (TextView) dialogView.findViewById(R.id.cityName);
+
         builder
                 .setCancelable(false)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        states.add(new State(stateName.getText().toString(), cityName.getText().toString(), "35 000\nso'm"));
+                        states.add(new State(name.getText().toString(), desc.getText().toString(), "35 000\nso'm"));
                         recyclerView.setAdapter(adapter);
                         dialog.dismiss();
                     }
