@@ -1,14 +1,14 @@
-package com.a1tech.expensebook;
+package com.a1tech.expensebook.Model;
 
-public class State {
+public class Item {
 
     private String name; // название
-    private String capital;  // столица
+    private String count;  // столица
     private String price; // цена
 
-    public State(String name, String capital, String price) {
+    public Item(String name, String count, String price) {
         this.name = name;
-        this.capital = capital;
+        this.count = count;
         this.price = price;
     }
 
@@ -20,12 +20,12 @@ public class State {
         this.name = name;
     }
 
-    public String getCapital() {
-        return capital;
+    public String getCount() {
+        return count;
     }
 
-    public void setCapital(String capital) {
-        this.capital = capital;
+    public void setCount(String count) {
+        this.count = count;
     }
 
     public String getPrice() {

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">ExpenseBook</string>
-    <string name="add_new_state">Add new State</string>
+    <string name="add_new_item">Добавить элемент</string>
+    <string name="item_name">Название</string>
+    <string name="item_count">Количество (кг/шт)</string>
+    <string name="item_price">Цена (UZS/USD)</string>
 </resources>

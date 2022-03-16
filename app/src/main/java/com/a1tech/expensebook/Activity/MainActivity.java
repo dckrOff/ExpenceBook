@@ -1,4 +1,4 @@
-package com.a1tech.expensebook;
+package com.a1tech.expensebook.Activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -6,23 +6,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.a1tech.expensebook.Model.Item;
+import com.a1tech.expensebook.Adapter.ItemAdapter;
+import com.a1tech.expensebook.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<State> states = new ArrayList<State>();
+    private final String TAG = "MainActivity";
+    ArrayList<Item> items = new ArrayList<Item>();
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
-    private StateAdapter adapter;
+    private ItemAdapter adapter;
     private EditText stateName, cityName;
+    private final String pattern = "###,###,###.###";
+    private final DecimalFormat decimalFormat = new DecimalFormat(pattern);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setInitialData();
 
         // создаем адаптер
-        adapter = new StateAdapter(this, states);
+        adapter = new ItemAdapter(this, items);
 
         // устанавливаем для списка адаптер
         recyclerView.setAdapter(adapter);
@@ -45,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         // начальная инициализация списка
         recyclerView = findViewById(R.id.list);
         fab = findViewById(R.id.fab);
-        stateName = findViewById(R.id.stateName);
-        cityName = findViewById(R.id.cityName);
+        stateName = findViewById(R.id.itemName);
+        cityName = findViewById(R.id.itemCount);
     }
 
     private void btnOnClick() {
@@ -59,26 +65,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setInitialData() {
-        states.add(new State("Бразилия", "Бразилиа", "35 000\nso'm"));
-        states.add(new State("Аргентина", "Буэнос-Айрес", "35 000\nso'm"));
-        states.add(new State("Колумбия", "Богота", "35 000\nso'm"));
-        states.add(new State("Уругвай", "Монтевидео", "35 000\nso'm"));
-        states.add(new State("Чили", "Сантьяго", "35 000\nso'm"));
+        items.add(new Item("Яблоко", "6 шт/кг", "35 000"));
+//        states.add(new State("Бразилия", "Бразилиа", "35 000 so'm"));
+//        states.add(new State("Аргентина", "Буэнос-Айрес", "35 000 so'm"));
+//        states.add(new State("Колумбия", "Богота", "35 000 so'm"));
+//        states.add(new State("Уругвай", "Монтевидео", "35 000 so'm"));
+//        states.add(new State("Чили", "Сантьяго", "35 000 so'm"));
     }
 
     private void alertDialogDemo() {
         ViewGroup viewGroup = findViewById(android.R.id.content);
-        View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_alert_dialog, viewGroup, false);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, viewGroup, false);
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
-        final TextView name = (TextView) dialogView.findViewById(R.id.stateName);
-        final TextView desc = (TextView) dialogView.findViewById(R.id.cityName);
+        final EditText etName = (EditText) dialogView.findViewById(R.id.itemName);
+        final EditText etCount = (EditText) dialogView.findViewById(R.id.itemCount);
+        final EditText etPrice = (EditText) dialogView.findViewById(R.id.itemPrice);
 
         builder
                 .setCancelable(false)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        states.add(new State(name.getText().toString(), desc.getText().toString(), "35 000\nso'm"));
+                        String formatCount = decimalFormat.format(Double.valueOf(etPrice.getText().toString()));
+                        String formatPrice = decimalFormat.format(Double.valueOf(etCount.getText().toString()));
+
+                        items.add(new Item(etName.getText().toString(), formatCount + " шт/кг", formatPrice));
                         recyclerView.setAdapter(adapter);
                         dialog.dismiss();
                     }
@@ -92,5 +103,4 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
 }

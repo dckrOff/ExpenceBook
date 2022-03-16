@@ -10,30 +10,42 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="@string/add_new_state"
+        android:text="@string/add_new_item"
         android:textColor="@color/black"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/stateName"
+        android:id="@+id/itemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:hint="Item name"
+        android:layout_marginRight="16dp"
+        android:hint="@string/item_name"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/cityName"
+        android:id="@+id/itemCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:hint="City name"
-        app:layout_constraintTop_toBottomOf="@+id/stateName" />
+        android:layout_marginRight="16dp"
+        android:hint="@string/item_count"
+        android:inputType="numberDecimal"
+        app:layout_constraintTop_toBottomOf="@+id/itemName" />
+
+    <EditText
+        android:id="@+id/itemPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:hint="@string/item_price"
+        android:inputType="numberDecimal"
+        app:layout_constraintTop_toBottomOf="@+id/itemCount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

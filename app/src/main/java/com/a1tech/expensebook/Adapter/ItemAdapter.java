@@ -1,4 +1,4 @@
-package com.a1tech.expensebook;
+package com.a1tech.expensebook.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,36 +9,39 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.a1tech.expensebook.Model.Item;
+import com.a1tech.expensebook.R;
+
 import java.util.List;
 
-public class StateAdapter extends RecyclerView.Adapter<StateAdapter.ViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
-    private final List<State> states;
+    private final List<Item> items;
 
-    StateAdapter(Context context, List<com.a1tech.expensebook.State> states) {
-        this.states = states;
+    public ItemAdapter(Context context, List<Item> items) {
+        this.items = items;
         this.inflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
-    public StateAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.list_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        State state = states.get(position);
-        holder.price.setText(state.getPrice());
-        holder.nameView.setText(state.getName());
-        holder.capitalView.setText(state.getCapital());
+        Item item = items.get(position);
+        holder.price.setText(item.getPrice());
+        holder.nameView.setText(item.getName());
+        holder.capitalView.setText(item.getCount());
     }
 
     @Override
     public int getItemCount() {
-        return states.size();
+        return items.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -48,7 +51,7 @@ public class StateAdapter extends RecyclerView.Adapter<StateAdapter.ViewHolder> 
             super(view);
             price = view.findViewById(R.id.price);
             nameView = view.findViewById(R.id.name);
-            capitalView = view.findViewById(R.id.description);
+            capitalView = view.findViewById(R.id.count);
         }
     }
 }

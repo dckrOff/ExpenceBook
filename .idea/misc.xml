@@ -3,8 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/A1Tech/AndroidStudioProjects/ExpenseBook/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/A1Tech/AndroidStudioProjects/ExpenseBook/app/src/main/res/layout/activity_main.xml" value="0.38365122615803815" />
         <entry key="..\:/Users/A1Tech/AndroidStudioProjects/ExpenseBook/app/src/main/res/layout/custom_alert_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/A1Tech/AndroidStudioProjects/ExpenseBook/app/src/main/res/layout/custom_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/A1Tech/AndroidStudioProjects/ExpenseBook/app/src/main/res/layout/list_item.xml" value="0.33" />
       </map>
     </option>
