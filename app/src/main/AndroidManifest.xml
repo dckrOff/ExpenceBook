@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExpenseBook">
         <activity
-            android:name=".Activity.MainActivity"
+            android:name=".Activity.ItemsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.ObjectsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
