@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class ObjectsActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
     private ObjectAdapter objectAdapter;
+    private ObjectAdapter.OnStateClickListener objectClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,7 @@ public class ObjectsActivity extends AppCompatActivity {
 
     private void createAndSetAdapter() {
         // создаем адаптер
-        objectAdapter = new ObjectAdapter(this, objects);
+        objectAdapter = new ObjectAdapter(this, objects, objectClickListener);
         // устанавливаем для списка адаптер
         recyclerView.setAdapter(objectAdapter);
     }
@@ -54,6 +56,14 @@ public class ObjectsActivity extends AppCompatActivity {
     }
 
     private void btnOnClick() {
+        // определяем слушателя нажатия элемента в списке
+        objectClickListener = new ObjectAdapter.OnStateClickListener() {
+            @Override
+            public void onStateClick(Objects objects, int position) {
+                Toast.makeText(getApplicationContext(), "Был выбран пункт " + objects.getObjectName(), Toast.LENGTH_SHORT).show();
+            }
+        };
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
