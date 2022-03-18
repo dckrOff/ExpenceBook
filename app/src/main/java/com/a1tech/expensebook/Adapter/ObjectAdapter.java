@@ -12,13 +12,36 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.a1tech.expensebook.Model.Objects;
 import com.a1tech.expensebook.R;
+import com.a1tech.expensebook.utils.ItemTouchHelperAdapter;
 
+import java.util.Collections;
 import java.util.List;
 
-public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder> {
+public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder> implements ItemTouchHelperAdapter {
+
+    @Override
+    public void onItemDismiss(int position) {
+        objects.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(objects, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(objects, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+//        return true;
+    }
 
     public interface OnStateClickListener {
-        void onStateClick(Objects state, int position);
+        void onObjectClick(Objects state, int position);
     }
 
     private final OnStateClickListener onClickListener;
@@ -49,7 +72,7 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickListener.onStateClick(objects, position);
+                onClickListener.onObjectClick(objects, position);
             }
         });
     }

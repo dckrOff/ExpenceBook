@@ -10,11 +10,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.a1tech.expensebook.Adapter.ObjectAdapter;
 import com.a1tech.expensebook.Model.Objects;
 import com.a1tech.expensebook.R;
+import com.a1tech.expensebook.utils.SimpleItemTouchHelperCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DecimalFormat;
@@ -40,6 +42,13 @@ public class ObjectsActivity extends AppCompatActivity {
         setInitialData();
         createAndSetAdapter();
         btnOnClick();
+        swipeToRemove();
+    }
+
+    private void swipeToRemove() {
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(objectAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recyclerView);
     }
 
     private void createAndSetAdapter() {
@@ -59,7 +68,8 @@ public class ObjectsActivity extends AppCompatActivity {
         // определяем слушателя нажатия элемента в списке
         objectClickListener = new ObjectAdapter.OnStateClickListener() {
             @Override
-            public void onStateClick(Objects objects, int position) {
+            public void onObjectClick(Objects objects, int position) {
+//                startActivity(new Intent(ObjectsActivity.this, ItemsActivity.class));
                 Toast.makeText(getApplicationContext(), "Был выбран пункт " + objects.getObjectName(), Toast.LENGTH_SHORT).show();
             }
         };
@@ -67,7 +77,7 @@ public class ObjectsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alertDialogDemo();
+                alertDialog();
             }
         });
     }
@@ -79,7 +89,7 @@ public class ObjectsActivity extends AppCompatActivity {
         }
     }
 
-    private void alertDialogDemo() {
+    private void alertDialog() {
         ViewGroup viewGroup = findViewById(android.R.id.content);
         View dialogView = LayoutInflater.from(this).inflate(R.layout.add_object_dialog, viewGroup, false);
         AlertDialog.Builder builder = new AlertDialog.Builder(ObjectsActivity.this);
