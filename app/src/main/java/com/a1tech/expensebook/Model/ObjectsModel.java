@@ -1,11 +1,11 @@
 package com.a1tech.expensebook.Model;
 
-public class Objects {
+public class ObjectsModel {
 
     private String objectName;
     private String objectPrice;
 
-    public Objects(String objectName, String objectPrice) {
+    public ObjectsModel(String objectName, String objectPrice) {
         this.objectName = objectName;
         this.objectPrice = objectPrice;
     }

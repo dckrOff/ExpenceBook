@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.a1tech.expensebook.Adapter.ObjectAdapter;
-import com.a1tech.expensebook.Model.Objects;
+import com.a1tech.expensebook.Model.ObjectsModel;
 import com.a1tech.expensebook.R;
 import com.a1tech.expensebook.utils.SimpleItemTouchHelperCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,7 +27,7 @@ public class ObjectsActivity extends AppCompatActivity {
     private final String TAG = "ObjectActivity";
     private final String pattern = "###,###,###.###";
     private final DecimalFormat decimalFormat = new DecimalFormat(pattern);
-    ArrayList<Objects> objects = new ArrayList<Objects>();
+    ArrayList<ObjectsModel> objectsModelArrayList = new ArrayList<ObjectsModel>();
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
     private ObjectAdapter objectAdapter;
@@ -53,7 +53,7 @@ public class ObjectsActivity extends AppCompatActivity {
 
     private void createAndSetAdapter() {
         // создаем адаптер
-        objectAdapter = new ObjectAdapter(this, objects, objectClickListener);
+        objectAdapter = new ObjectAdapter(this, objectsModelArrayList, objectClickListener);
         // устанавливаем для списка адаптер
         recyclerView.setAdapter(objectAdapter);
     }
@@ -68,9 +68,9 @@ public class ObjectsActivity extends AppCompatActivity {
         // определяем слушателя нажатия элемента в списке
         objectClickListener = new ObjectAdapter.OnStateClickListener() {
             @Override
-            public void onObjectClick(Objects objects, int position) {
+            public void onObjectClick(ObjectsModel objectsModel, int position) {
 //                startActivity(new Intent(ObjectsActivity.this, ItemsActivity.class));
-                Toast.makeText(getApplicationContext(), "Был выбран пункт " + objects.getObjectName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Был выбран пункт " + objectsModel.getObjectName(), Toast.LENGTH_SHORT).show();
             }
         };
 
@@ -84,7 +84,7 @@ public class ObjectsActivity extends AppCompatActivity {
 
     private void setInitialData() {
         for (int i = 0; i < 15; i++) {
-            objects.add(new Objects("Квартира №" + i, "35 000 000"));
+            objectsModelArrayList.add(new ObjectsModel("Квартира №" + i, "35 000 000"));
 
         }
     }
@@ -100,7 +100,7 @@ public class ObjectsActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        objects.add(new Objects(etName.getText().toString(), "12 345 678"));
+                        objectsModelArrayList.add(new ObjectsModel(etName.getText().toString(), "12 345 678"));
                         recyclerView.setAdapter(objectAdapter);
                         dialog.dismiss();
                     }

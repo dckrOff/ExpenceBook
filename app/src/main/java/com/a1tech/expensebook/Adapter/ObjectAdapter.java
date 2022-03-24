@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.a1tech.expensebook.Model.Objects;
+import com.a1tech.expensebook.Model.ObjectsModel;
 import com.a1tech.expensebook.R;
 import com.a1tech.expensebook.utils.ItemTouchHelperAdapter;
 
@@ -41,15 +41,15 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder
     }
 
     public interface OnStateClickListener {
-        void onObjectClick(Objects state, int position);
+        void onObjectClick(ObjectsModel state, int position);
     }
 
     private final OnStateClickListener onClickListener;
 
     private final LayoutInflater inflater;
-    private final List<Objects> objects;
+    private final List<ObjectsModel> objects;
 
-    public ObjectAdapter(Context context, List<Objects> objects, OnStateClickListener onClickListener) {
+    public ObjectAdapter(Context context, List<ObjectsModel> objects, OnStateClickListener onClickListener) {
         this.onClickListener = onClickListener;
         this.inflater = LayoutInflater.from(context);
         this.objects = objects;
@@ -65,14 +65,14 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder
     @Override
     @SuppressLint("RecyclerView")
     public void onBindViewHolder(ObjectAdapter.ViewHolder holder, int position) {
-        Objects objects = this.objects.get(position);
-        holder.price.setText(objects.getObjectPrice());
-        holder.nameView.setText(objects.getObjectName());
+        ObjectsModel objectsModel = this.objects.get(position);
+        holder.price.setText(objectsModel.getObjectPrice());
+        holder.nameView.setText(objectsModel.getObjectName());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickListener.onObjectClick(objects, position);
+                onClickListener.onObjectClick(objectsModel, position);
             }
         });
     }

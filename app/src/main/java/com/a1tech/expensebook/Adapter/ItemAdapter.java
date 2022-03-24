@@ -9,17 +9,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.a1tech.expensebook.Model.Items;
+import com.a1tech.expensebook.Model.ItemsModel;
 import com.a1tech.expensebook.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
-    private final List<Items> items;
+    private final List<ItemsModel> items;
 
-    public ItemAdapter(Context context, List<Items> items) {
+    public ItemAdapter(Context context, List<ItemsModel> items) {
         this.items = items;
         this.inflater = LayoutInflater.from(context);
     }
@@ -33,10 +34,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Items items = this.items.get(position);
-        holder.price.setText(items.getPrice());
+        ItemsModel items = this.items.get(position);
         holder.nameView.setText(items.getName());
         holder.countView.setText(items.getCount());
+        holder.price.setText(items.getPrice());
     }
 
     @Override

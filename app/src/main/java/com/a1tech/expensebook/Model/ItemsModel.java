@@ -1,12 +1,12 @@
 package com.a1tech.expensebook.Model;
 
-public class Items {
+public class ItemsModel {
 
     private String name; // название
     private String count;  // количества
     private String price; // цена
 
-    public Items(String name, String count, String price) {
+    public ItemsModel(String name, String count, String price) {
         this.name = name;
         this.count = count;
         this.price = price;
