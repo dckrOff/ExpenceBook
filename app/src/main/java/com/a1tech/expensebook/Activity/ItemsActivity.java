@@ -93,6 +93,8 @@ public class ItemsActivity extends AppCompatActivity {
     }
 
 //    private void totalAmmount() {
+//        String formatCount = decimalFormat.format(Double.valueOf(items.getCount()));
+//
 //        for (int i = 0; i < itemsArrayList.size(); i++) {
 //            Log.e(TAG,"-->" + itemsArrayList.get(i).getPrice().replaceAll(" ", ""));
 //            int listPrice = Integer.parseInt(itemsArrayList.get(i).getPrice().replaceAll(" ", ""));
@@ -173,7 +175,7 @@ public class ItemsActivity extends AppCompatActivity {
 
                     String name = etName.getText().toString().trim();
                     int count = Integer.parseInt(etCount.getText().toString());
-                    int price = Integer.parseInt(etPrice.getText().toString());
+                    long price = Long.parseLong(etPrice.getText().toString());
 
                     itemsArrayList.add(new ItemsModel(name, count, price));
                     recyclerView.setAdapter(itemAdapter);

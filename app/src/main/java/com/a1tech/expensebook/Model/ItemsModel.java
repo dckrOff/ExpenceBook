@@ -4,9 +4,9 @@ public class ItemsModel {
 
     private String name; // название
     private int count;  // количества
-    private int price; // цена
+    private long price; // цена
 
-    public ItemsModel(String name, int count, int price) {
+    public ItemsModel(String name, int count, long price) {
         this.name = name;
         this.count = count;
         this.price = price;
@@ -28,11 +28,11 @@ public class ItemsModel {
         this.count = count;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 }
