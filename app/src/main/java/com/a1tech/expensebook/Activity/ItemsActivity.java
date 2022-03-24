@@ -26,7 +26,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ItemsActivity extends AppCompatActivity {
@@ -34,8 +33,6 @@ public class ItemsActivity extends AppCompatActivity {
     private final String TAG = "ItemsActivity";
     private final String ITEM_SHARED_NAME = "itemsList";
     private final String SHARED_PREFS_NAME = "sharedPrefsData";
-    private final String pattern = "###,###,###.###";
-    private final DecimalFormat decimalFormat = new DecimalFormat(pattern);
     private ArrayList<ItemsModel> itemsArrayList = new ArrayList<>();
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
@@ -53,7 +50,7 @@ public class ItemsActivity extends AppCompatActivity {
         loadData();
         buildRecyclerView();
         btnOnClick();
-        totalAmmount();
+//        totalAmmount();
     }
 
     private void buildRecyclerView() {
@@ -95,14 +92,14 @@ public class ItemsActivity extends AppCompatActivity {
         });
     }
 
-    private void totalAmmount() {
-        for (int i = 0; i < itemsArrayList.size(); i++) {
-            Log.e(TAG,"-->" + itemsArrayList.get(i).getPrice().replaceAll(" ", ""));
+//    private void totalAmmount() {
+//        for (int i = 0; i < itemsArrayList.size(); i++) {
+//            Log.e(TAG,"-->" + itemsArrayList.get(i).getPrice().replaceAll(" ", ""));
 //            int listPrice = Integer.parseInt(itemsArrayList.get(i).getPrice().replaceAll(" ", ""));
 //            totalAmmountSumm += listPrice;
-        }
+//        }
 //        tvTotalAmmount.setText(totalAmmountSumm);
-    }
+//    }
 
     private void loadData() {
         Log.e(TAG, "loadData ga kirdi");
@@ -170,29 +167,24 @@ public class ItemsActivity extends AppCompatActivity {
         final EditText etCount = dialogView.findViewById(R.id.itemCount);
         final EditText etPrice = dialogView.findViewById(R.id.itemPrice);
 
-        builder
-                .setCancelable(false)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        if (!etName.getText().toString().isEmpty() && !etCount.getText().toString().isEmpty() && !etPrice.getText().toString().isEmpty()) {
+        builder.setCancelable(false).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (!etName.getText().toString().isEmpty() && !etCount.getText().toString().isEmpty() && !etPrice.getText().toString().isEmpty()) {
 
-                            // formatter of number (1234567890) --> (1 234 567 890)
-                            String formatPrice = decimalFormat.format(Double.valueOf(etPrice.getText().toString()));
-                            String formatCount = decimalFormat.format(Double.valueOf(etCount.getText().toString()));
+                    String name = etName.getText().toString().trim();
+                    int count = Integer.parseInt(etCount.getText().toString());
+                    int price = Integer.parseInt(etPrice.getText().toString());
 
-                            itemsArrayList.add(new ItemsModel(etName.getText().toString(), formatCount, formatPrice));
-                            recyclerView.setAdapter(itemAdapter);
+                    itemsArrayList.add(new ItemsModel(name, count, price));
+                    recyclerView.setAdapter(itemAdapter);
 
-//                            // уведомление адаптера при добавлении новых данных.
-//                            itemAdapter.notifyItemInserted(itemsArrayList.size());
-
-                            saveData();
-                            dialog.dismiss();
-                        } else {
-                            Toast.makeText(ItemsActivity.this, "Bo'sh maydonni to'ldiring!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                })
+                    saveData();
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(ItemsActivity.this, "Bo'sh maydonni to'ldiring!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();

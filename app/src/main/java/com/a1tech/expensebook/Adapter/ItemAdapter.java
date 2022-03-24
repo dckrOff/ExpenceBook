@@ -19,6 +19,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
     private final List<ItemsModel> items;
+    private final String pattern = "###,###,###.###";
+    private final DecimalFormat decimalFormat = new DecimalFormat(pattern);
 
     public ItemAdapter(Context context, List<ItemsModel> items) {
         this.items = items;
@@ -35,9 +37,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ItemsModel items = this.items.get(position);
+
+//        formatter of number(1234567890)-- > (1 234 567 890)
+        String formatCount = decimalFormat.format(Double.valueOf(items.getCount()));
+        String formatPrice = decimalFormat.format(Double.valueOf(items.getPrice()));
+
         holder.nameView.setText(items.getName());
-        holder.countView.setText(items.getCount());
-        holder.price.setText(items.getPrice());
+        holder.countView.setText(formatCount);
+        holder.price.setText(formatPrice);
     }
 
     @Override

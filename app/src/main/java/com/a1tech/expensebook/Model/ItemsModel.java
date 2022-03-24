@@ -3,10 +3,10 @@ package com.a1tech.expensebook.Model;
 public class ItemsModel {
 
     private String name; // название
-    private String count;  // количества
-    private String price; // цена
+    private int count;  // количества
+    private int price; // цена
 
-    public ItemsModel(String name, String count, String price) {
+    public ItemsModel(String name, int count, int price) {
         this.name = name;
         this.count = count;
         this.price = price;
@@ -20,19 +20,19 @@ public class ItemsModel {
         this.name = name;
     }
 
-    public String getCount() {
+    public int getCount() {
         return count;
     }
 
-    public void setCount(String count) {
+    public void setCount(int count) {
         this.count = count;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }
