@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ItemsActivity extends AppCompatActivity {
@@ -33,13 +34,15 @@ public class ItemsActivity extends AppCompatActivity {
     private final String TAG = "ItemsActivity";
     private final String ITEM_SHARED_NAME = "itemsList";
     private final String SHARED_PREFS_NAME = "sharedPrefsData";
+    private final String pattern = "###,###,###.###";
+    private final DecimalFormat decimalFormat = new DecimalFormat(pattern);
     private ArrayList<ItemsModel> itemsArrayList = new ArrayList<>();
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
     private ItemAdapter itemAdapter;
     private ImageView btnBack;
     private TextView tvTotalAmmount;
-    private int totalAmmountSumm;
+    private long totalAmmountSumm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,7 @@ public class ItemsActivity extends AppCompatActivity {
         loadData();
         buildRecyclerView();
         btnOnClick();
-//        totalAmmount();
+        totalAmmount();
     }
 
     private void buildRecyclerView() {
@@ -92,16 +95,16 @@ public class ItemsActivity extends AppCompatActivity {
         });
     }
 
-//    private void totalAmmount() {
-//        String formatCount = decimalFormat.format(Double.valueOf(items.getCount()));
-//
-//        for (int i = 0; i < itemsArrayList.size(); i++) {
-//            Log.e(TAG,"-->" + itemsArrayList.get(i).getPrice().replaceAll(" ", ""));
-//            int listPrice = Integer.parseInt(itemsArrayList.get(i).getPrice().replaceAll(" ", ""));
-//            totalAmmountSumm += listPrice;
-//        }
-//        tvTotalAmmount.setText(totalAmmountSumm);
-//    }
+    private void totalAmmount() {
+        for (int i = 0; i < itemsArrayList.size(); i++) {
+            long listPrice = itemsArrayList.get(i).getPrice();
+            totalAmmountSumm += listPrice;
+        }
+
+        String totalSumm = decimalFormat.format(Double.valueOf(totalAmmountSumm));
+
+        tvTotalAmmount.setText(totalSumm);
+    }
 
     private void loadData() {
         Log.e(TAG, "loadData ga kirdi");
@@ -181,9 +184,10 @@ public class ItemsActivity extends AppCompatActivity {
                     recyclerView.setAdapter(itemAdapter);
 
                     saveData();
+                    totalAmmount();
                     dialog.dismiss();
                 } else {
-                    Toast.makeText(ItemsActivity.this, "Bo'sh maydonni to'ldiring!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ItemsActivity.this, "Ошибка: Заполните пустые поля!", Toast.LENGTH_SHORT).show();
                 }
             }
         })
