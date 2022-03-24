@@ -13,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +24,7 @@ import com.a1tech.expensebook.Adapter.ItemAdapter;
 import com.a1tech.expensebook.Model.ItemsModel;
 import com.a1tech.expensebook.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -54,6 +57,59 @@ public class ItemsActivity extends AppCompatActivity {
         buildRecyclerView();
         btnOnClick();
         totalAmmount();
+        swipeToDeleteitem();
+    }
+
+    private void swipeToDeleteitem() {
+        // on below line we are creating a method to create item touch helper
+        // method for adding swipe to delete functionality.
+        // in this we are specifying drag direction and position to right
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                // this method is called
+                // when the item is moved.
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                // this method is called when we swipe our item to right direction.
+                // on below line we are getting the item at a particular position.
+                ItemsModel deletedCourse = itemsArrayList.get(viewHolder.getAdapterPosition());
+
+                // below line is to get the position
+                // of the item at that position.
+                int position = viewHolder.getAdapterPosition();
+
+                // this method is called when item is swiped.
+                // below line is to remove item from our array list.
+                itemsArrayList.remove(viewHolder.getAdapterPosition());
+
+                // below line is to notify our item is removed from adapter.
+                itemAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+
+                saveData();
+
+                // below line is to display our snackbar with action.
+                Snackbar.make(recyclerView, deletedCourse.getName(), Snackbar.LENGTH_LONG).setAction("Отмена", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // adding on click listener to our action of snack bar.
+                        // below line is to add our item to array list with a position.
+                        itemsArrayList.add(position, deletedCourse);
+
+                        // below line is to notify item is
+                        // added to our adapter class.
+                        itemAdapter.notifyItemInserted(position);
+
+                        saveData();
+                    }
+                }).show();
+            }
+            // at last we are adding this
+            // to our recycler view.
+        }).attachToRecyclerView(recyclerView);
     }
 
     private void buildRecyclerView() {
@@ -100,9 +156,7 @@ public class ItemsActivity extends AppCompatActivity {
             long listPrice = itemsArrayList.get(i).getPrice();
             totalAmmountSumm += listPrice;
         }
-
         String totalSumm = decimalFormat.format(Double.valueOf(totalAmmountSumm));
-
         tvTotalAmmount.setText(totalSumm);
     }
 
@@ -132,11 +186,6 @@ public class ItemsActivity extends AppCompatActivity {
             itemsArrayList = new ArrayList<>();
         }
         Log.e(TAG, "loadData dan ketdi");
-        try {
-            Log.e(TAG, json);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void saveData() {
@@ -199,5 +248,23 @@ public class ItemsActivity extends AppCompatActivity {
         builder.setView(dialogView);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveData();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        saveData();
     }
 }
