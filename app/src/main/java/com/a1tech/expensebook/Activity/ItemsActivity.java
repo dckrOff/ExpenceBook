@@ -42,6 +42,7 @@ public class ItemsActivity extends AppCompatActivity {
     private ItemAdapter itemAdapter;
     private ImageView btnBack;
     private TextView tvTotalAmmount;
+    private int totalAmmountSumm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +50,10 @@ public class ItemsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_items);
 
         initViews();
-//        createAndSetAdapter();
         loadData();
         buildRecyclerView();
         btnOnClick();
+        totalAmmount();
     }
 
     private void buildRecyclerView() {
@@ -70,19 +71,11 @@ public class ItemsActivity extends AppCompatActivity {
         recyclerView.setAdapter(itemAdapter);
     }
 
-//    private void createAndSetAdapter() {
-//        // создаем адаптер
-//        itemAdapter = new ItemAdapter(this, itemsArrayList);
-//        // устанавливаем для списка адаптер
-//        recyclerView.setAdapter(itemAdapter);
-//    }
-
     private void initViews() {
-        // начальная инициализация списка
         recyclerView = findViewById(R.id.itemsList);
         fab = findViewById(R.id.itemFab);
         btnBack = findViewById(R.id.btnBack);
-//        tvTotalAmmount = findViewById(R.id.tvTotalAmmount);
+        tvTotalAmmount = findViewById(R.id.tvTotalAmmount);
     }
 
     private void btnOnClick() {
@@ -102,8 +95,13 @@ public class ItemsActivity extends AppCompatActivity {
         });
     }
 
-    private void totalAmmount(){
-
+    private void totalAmmount() {
+        for (int i = 0; i < itemsArrayList.size(); i++) {
+            Log.e(TAG,"-->" + itemsArrayList.get(i).getPrice().replaceAll(" ", ""));
+//            int listPrice = Integer.parseInt(itemsArrayList.get(i).getPrice().replaceAll(" ", ""));
+//            totalAmmountSumm += listPrice;
+        }
+//        tvTotalAmmount.setText(totalAmmountSumm);
     }
 
     private void loadData() {
